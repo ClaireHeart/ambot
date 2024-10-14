@@ -34,22 +34,19 @@ app.post('/signup', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-    const sql = "SELECT * FROM students WHERE `email` = ? AND  `password` = ?";
-
+    const sql = "SELECT * FROM students WHERE `email` = ? AND `password` = ?";
     
-    db.query(sql, [req.body.email,  req.body.password], (err, data) => {
+    db.query(sql, [req.body.email, req.body.password], (err, data) => {
         if (err) {
-            return res.json("Error")
+            return res.status(500).json("Error");
         }
-        if(data.length > 0) {
-        return res.json("Success");
+        if (data.length > 0) {
+            return res.json("Success");
+        } else {
+            return res.json("Failed"); // Corrected typo here
         }
-        else {
-            return res.json("Faile");
-        }
-
-})
-})
+    });
+});
 
 app.listen(8081, () => {
     console.log("listening on port 8081");
